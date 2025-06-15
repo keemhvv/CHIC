@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>CHIC DIARY</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      font-size: 3em;
+      margin-top: 30px;
+      font-weight: bold;
+      color: #ff8fa3;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100%;
+      background-color: #f5f5f5;
+      padding-top: 100px;
+    }
+    nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #f7accf; /* baby pink */
+}
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    nav ul li {
+      margin: 20px;
+      font-weight: bold;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #333;
+    }
+    .account-section {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 20px;
+    }
+    .main-content {
+      margin-left: 200px;
+      padding: 40px;
+    }
+    .photo-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 20px;
+      padding-bottom: 10px;
+    }
+    .photo-slider img {
+      height: 400px;
+      scroll-snap-align: start;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+    .photo-slider img:hover {
+      transform: scale(1.05);
+    }
+    .look-check {
+      font-size: 1.8em;
+      font-weight: bold;
+      margin-top: 30px;
+      text-align: center;
+      color: #7ec8e3;
+    }
+
+    
+/* 오늘의 코디 추천 스타일 리뉴얼 */
+.today-look {
+  margin-top: 80px;
+  background: linear-gradient(to right, #fff0f5, #f0faff);
+  padding: 60px 30px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.today-look h2 {
+  text-align: center;
+  font-size: 2em;
+  color: #ff8fa3;
+  margin-bottom: 40px;
+}
+
+.look-feature {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.look-feature img {
+  width: 500px;
+  max-width: 90%;
+  border-radius: 30px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.look-feature-text {
+  max-width: 400px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.look-feature-text h3 {
+  font-size: 1.5em;
+  color: #7ec8e3;
+  margin-bottom: 10px;
+}
+
+.look-feature-text p {
+  font-size: 1.2em;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* Scroll to top button */
+#toTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #ff8fa3;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: none;
+  z-index: 1000;
+}
+#toTopBtn:hover {
+  background-color: #e87c95;
+}
+
+    /* 인기 아이템 */
+    .trend-section {
+      margin-top: 80px;
+    }
+    .trend-section h2 {
+      text-align: center;
+      color: #7ec8e3;
+    }
+    .trend-items {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .trend-items img {
+      width: 200px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+    .trend-items img:hover {
+      transform: scale(1.05);
+    }
+
+    /* footer */
+    footer {
+      margin-top: 100px;
+      font-size: 0.8em;
+      color: #888;
+      text-align: center;
+      padding: 40px 20px;
+      background-color: #f9f9f9;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      margin-top: 100px;
+      text-align: center;
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #ff8fa3;
+    }
+    .footer-links a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #7ec8e3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>CHIC DIARY</header>
+
+  <nav>
+    <ul>
+      <li><a href="spring.html">Spring</a></li>
+      <li><a href="summer.html">Summer</a></li>
+      <li><a href="autumm.html">Autumm</a></li>
+      <li><a href="winter.html">Winter</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="account.html">Account</a></li>
+    </ul>
+  </nav>
+
+
+  <div class="main-content">
+    
+    <!-- 슬라이더 -->
+    <div class="photo-slider">
+      <img src="KakaoTalk_20250614_012619696_01.jpg" alt="Summer Look 1">
+      <img src="KakaoTalk_20250613_225419012_01.jpg" alt="Summer Look 2">
+      <img src="KakaoTalk_20250613_225419012_03.jpg" alt="Summer Look 3">
+      <img src="KakaoTalk_20250614_023052799_03.jpg" alt="Summer Look 4">
+      <img src="KakaoTalk_20250614_023942659_02.jpg" alt="Summer Look 5">
+      <img src="KakaoTalk_20250614_023942659_01.jpg" alt="Summer Look 6">
+      <img src="KakaoTalk_20250614_012619696.jpg" alt="Summer Look 7">
+    </div>
+
+    <div class="look-check">LOOK CHECK</div>
+
+    <!-- 이번 달 인기 아이템 -->
+    <section class="trend-section">
+      
+      <div class="trend-items">
+        <img src="KakaoTalk_20250616_032751699_01.jpg" alt="아이템1">
+        <img src="KakaoTalk_20250616_032751699_02.jpg" alt="아이템2">
+        <img src="KakaoTalk_20250616_032751699_04.jpg" alt="아이템3">
+        <img src="KakaoTalk_20250616_032751699_03.jpg" alt="아이템4">
+      </div>
+       <h2> 이번 달 인기 아이템</h2>
+    </section>
+    
+
+<!-- 오늘의 코디 추천 -->
+<section class="today-look">
+  <h2> 오늘의 코디를 추천합니다 ~.~ </h2>
+  <div class="look-feature">
+    <img src="KakaoTalk_20250616_032751699.jpg" alt="추천코디">
+    <div class="look-feature-text">
+      <h3>#청량한_여름무드</h3>
+      <p>뜨거워진 햇빛을 막을 수 있으면서도 패션감각을 살리기 위한 일자챙 모자를 시작으로 허전한 목을 채워주는 색깔있는 목걸이와 귀여운 패턴이 들어간
+        하늘색 상의, 잘어울리는 갈색 하의로 신경 쓴듯 안쓴듯 하면서도 귀여운 매력을 보여줄 수 있는 
+        오늘의 코디 ^...^!!!
+        모두 커뮤니티 게시판으로 이동해 자신의 오늘의코디를 자랑해 보는건 어떨까요?!?
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 맨 위로 올라가기 버튼 -->
+<button id="toTopBtn">↑</button>
+
+    <!-- 쇼핑 플랫폼 링크 -->
+    <div class="footer-links">
+      <a href="https://store.musinsa.com">MUSINSA</a>
+      <a href="https://zigzag.kr">ZIGZAG</a>
+      <a href="https://www.29cm.co.kr">29CM</a>
+      <a href="https://display.wconcept.co.kr/">W CONCEPT</a>
+    </div>
+
+    <!-- 관계자 정보 footer -->
+    <footer>
+      CHIC DIARY &nbsp;|&nbsp; TEL 010-1234-5678 &nbsp;|&nbsp; E-MAIL keenhvv@gmail.com <br>
+      ⓒ 2025 Designed by Kim Hyewon. All rights reserved.
+    </footer>
+
+  </div>
+<script>
+  // Scroll to top button
+  const toTopBtn = document.getElementById('toTopBtn');
+
+  window.onscroll = function() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      toTopBtn.style.display = "block";
+    } else {
+      toTopBtn.style.display = "none";
+    }
+  };
+
+  toTopBtn.onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+</script>
+
+</body>
+</html>

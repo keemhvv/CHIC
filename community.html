@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CHIC DIARY - Community</title>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Gowun Dodum', sans-serif;
+      background: url('https://www.transparenttextures.com/patterns/dot-grid.png'), 
+                  linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95));
+      background-blend-mode: overlay;
+      color: #222;
+    }
+
+.header {
+  text-align: center;
+  font-size: 3em;
+  margin-top: 30px;
+  font-weight: bold;
+  color: #ff8fa3; /* baby pink */
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+    .nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 30px;
+      margin: 0 40px 20px 0;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      font-family: 'Noto Sans KR', sans-serif;
+      transition: 0.3s;
+    }
+
+    .nav a:hover {
+      color: #f7accf;
+    }
+
+    .filter-buttons {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .filter-buttons button {
+      margin: 0 5px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 20px;
+      background-color: #dfe9ff;
+      color: rgb(143, 143, 143);
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .feed-container {
+      max-width: 720px;
+      margin: 20px auto 80px;
+      padding: 0 20px;
+    }
+
+    .post {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 40px;
+      transition: 0.3s;
+    }
+
+    .post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+    }
+
+    .post img {
+      width: 80%;
+      display: block;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #cacaca;
+      border-radius: 15px;
+      box-shadow: 0 30px 20px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .post img:hover {
+      transform: scale(1.03);
+    }
+
+    .caption {
+      font-size: 18px;
+      margin: 12px 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .interaction {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+
+    .like {
+      cursor: pointer;
+      color: #aaa;
+      transition: 0.3s;
+    }
+
+    .like.liked {
+      color: #ff6b81;
+      text-shadow: 0 0 5px rgba(255,107,129,0.4);
+    }
+
+    .comments {
+      margin-top: 12px;
+      font-size: 15px;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .comments p {
+      margin: 6px 0;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: slideFade 0.4s forwards;
+    }
+
+    @keyframes slideFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .comment-box {
+      display: flex;
+      margin-top: 8px;
+    }
+
+    .comment-box input {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .comment-box button {
+      margin-left: 6px;
+      padding: 6px 12px;
+      border: none;
+      background-color: #f7accf;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .upload-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #f7accf;
+      color: white;
+      font-size: 28px;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    .upload-button:hover {
+      background-color: #ff6eb2;
+    }
+
+    #photoModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #photoModal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+
+    /* 모달 업로드 창 */
+    #uploadModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+
+    #uploadForm {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-family: 'Noto Sans KR', sans-serif;
+      animation: slideUp 0.4s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #uploadForm input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    #uploadForm button {
+      padding: 10px;
+      background-color: #f7accf;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    #uploadForm button:hover {
+      background-color: #ff8fc2;
+    }
+    .footer-links {
+  margin-top: 100px;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #ff8fa3;
+}
+.footer-links a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #7ec8e3;
+}
+
+footer {
+  margin-top: 100px;
+  font-size: 0.8em;
+  color: #888;
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  line-height: 1.6;
+}
+
+  </style>
+</head>
+<body>
+  
+  <div class="header">
+  <a href="index.html" style="text-decoration: none; color: inherit;">CHIC DIARY</a>
+</div>
+  <div class="nav">
+    <a href="spring.html">Spring</a>
+    <a href="summer.html">Summer</a>
+    <a href="autumm.html">Autumm</a>
+    <a href="winter.html">Winter</a>
+    <a href="community.html">Community</a>
+    <a href="account.html">Account</a>
+  </div>
+
+  <div class="filter-buttons">
+    <button onclick="filterPosts('#ootd')">#ootd</button>
+    <button onclick="filterPosts('#프릴스커트')">#프릴스커트</button>
+    <button onclick="filterPosts('all')">모두 보기</button>
+  </div>
+
+  <div class="feed-container" id="feed"></div>
+
+  <button class="upload-button" onclick="showUploadModal()">＋</button>
+
+  <div id="photoModal"><img id="modalImg" src="" /></div>
+
+  <div id="uploadModal">
+    <form id="uploadForm" onsubmit="submitPost(event)">
+      <input type="text" id="newImg" placeholder="이미지 URL 입력" required>
+      <input type="text" id="newCap" placeholder="캡션 입력" required>
+      <button type="submit">업로드</button>
+    </form>
+  </div>
+
+  <script>
+    const postsData = [
+      {
+        img: "KakaoTalk_20250615_014757145_01.jpg",
+        caption: "#체크셔츠 #꾸안꾸코디 #ootd"
+      },
+      {
+        img: "KakaoTalk_20250615_014757145_02.jpg",
+        caption: "#프릴스커트 #화이트룩 #느좋코디"
+      },
+      {
+        img: "KakaoTalk_20250615_014757145.jpg",
+        caption: "#보세 #색감활용 #ootd"
+      }
+    ];
+
+    function renderPosts() {
+      const feed = document.getElementById("feed");
+      feed.innerHTML = "";
+      postsData.forEach((post, idx) => {
+        const html = `
+          <div class="post">
+            <img src="${post.img}" alt="Look ${idx + 1}" onclick="showModal('${post.img}')">
+            <div class="caption">${post.caption}</div>
+            <div class="interaction">
+              <span class="like" onclick="toggleLike(this)">♡ 0</span>
+              <span class="comment-count">💬 0</span>
+            </div>
+            <div class="comments"></div>
+            <div class="comment-box">
+              <input type="text" placeholder="댓글 달기...">
+              <button onclick="postComment(this)">게시</button>
+            </div>
+          </div>`;
+        feed.insertAdjacentHTML("beforeend", html);
+      });
+    }
+
+    function toggleLike(btn) {
+      let count = parseInt(btn.textContent.replace(/[^0-9]/g, ''));
+      if (btn.classList.contains("liked")) {
+        btn.textContent = `♡ ${count - 1}`;
+      } else {
+        btn.textContent = `♥ ${count + 1}`;
+      }
+      btn.classList.toggle("liked");
+    }
+
+    function postComment(button) {
+      const box = button.closest(".comment-box");
+      const input = box.querySelector("input");
+      const comments = box.previousElementSibling;
+      if (input.value.trim()) {
+        const p = document.createElement("p");
+        p.textContent = input.value;
+        comments.appendChild(p);
+        input.value = "";
+        const countSpan = box.parentElement.querySelector(".comment-count");
+        countSpan.textContent = `💬 ${comments.children.length}`;
+      }
+    }
+
+    function showModal(src) {
+      document.getElementById("modalImg").src = src;
+      document.getElementById("photoModal").style.display = "flex";
+    }
+
+    document.getElementById("photoModal").addEventListener("click", () => {
+      document.getElementById("photoModal").style.display = "none";
+    });
+
+    function filterPosts(tag) {
+      const posts = document.querySelectorAll(".post");
+      posts.forEach(post => {
+        const cap = post.querySelector(".caption").textContent;
+        if (tag === 'all' || cap.includes(tag)) {
+          post.style.display = "block";
+        } else {
+          post.style.display = "none";
+        }
+      });
+    }
+
+    function showUploadModal() {
+      document.getElementById("uploadModal").style.display = "flex";
+    }
+
+    function submitPost(e) {
+      e.preventDefault();
+      const img = document.getElementById("newImg").value;
+      const cap = document.getElementById("newCap").value;
+      if (img && cap) {
+        postsData.unshift({ img, caption: cap });
+        renderPosts();
+        document.getElementById("uploadModal").style.display = "none";
+        document.getElementById("newImg").value = "";
+        document.getElementById("newCap").value = "";
+      }
+    }
+
+    renderPosts();
+  </script>
+  <!-- footer-links -->
+<div class="footer-links">
+  <a href="https://store.musinsa.com">MUSINSA</a>
+  <a href="https://zigzag.kr">ZIGZAG</a>
+  <a href="https://www.29cm.co.kr">29CM</a>
+  <a href="https://display.wconcept.co.kr/">W CONCEPT</a>
+</div>
+
+<!-- footer 정보 -->
+<footer>
+  CHIC DIARY &nbsp;|&nbsp; TEL 010-1234-5678 &nbsp;|&nbsp; E-MAIL keenhvv@gmail.com <br>
+  ⓒ 2025 Designed by Kim Hyewon. All rights reserved.
+</footer>
+
+</body>
+</html>
